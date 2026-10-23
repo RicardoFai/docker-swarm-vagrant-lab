@@ -1,8 +1,7 @@
 machines = {
-  "node01" => {"memory" => "512", "cpu" => "1", "image" => "bento/ubuntu-22.04"},
-  "node02" => {"memory" => "512", "cpu" => "1", "image" => "bento/ubuntu-22.04"},
-  "node03" => {"memory" => "512", "cpu" => "1", "image" => "bento/ubuntu-22.04"},
-  "node04" => {"memory" => "512", "cpu" => "1", "image" => "bento/ubuntu-22.04"}
+  "node01" => {"memory" => "1024", "cpu" => "1", "image" => "debian/bookworm64"},
+  "node02" => {"memory" => "1024", "cpu" => "1", "image" => "debian/bookworm64"}
+  
 }
 
 Vagrant.configure("2") do |config|
@@ -11,8 +10,9 @@ Vagrant.configure("2") do |config|
     config.vm.define "#{name}" do |machine|
       machine.vm.box = "#{conf["image"]}"
       machine.vm.hostname = "#{name}"
-      machine.vm.network "public_network"
+      # machine.vm.network "public_network"
       machine.vm.provider "virtualbox" do |vb|
+        vb.gui = true
         vb.name = "#{name}"
         vb.memory = conf["memory"]
         vb.cpus = conf["cpu"]
